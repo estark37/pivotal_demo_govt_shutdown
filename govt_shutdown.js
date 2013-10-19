@@ -7,9 +7,12 @@ if (Meteor.isClient) {
   Template.comments.events = {
     "submit #commentForm": function (evt) {
       evt.preventDefault();
-      Comments.insert({
+      Meteor.call("addComment", {
         author: $("#author").val(),
         comment: $("#comment").val()
+      }, function (err) {
+        if (err)
+          alert("Your comment didn't work!");
       });
       $("#comment").val("");
       return false;
@@ -41,3 +44,19 @@ if (Meteor.isClient) {
       Meteor.subscribe("commentsByAuthor", Meteor.userId());
   });
 }
+
+// This code runs on both the client and server.
+Meteor.methods({
+  addComment: function (comment) {
+    var loggedInUser = this.userId;
+    if (! loggedInUser)
+      throw new Meteor.Error("Can't add comment when logged out!");
+
+    if (comment.comment &&
+        comment.comment.length <= 140 &&
+        comment.author === loggedInUser)
+      Comments.insert(comment);
+    else
+      throw new Meteor.Error("Bad comment");
+  }
+});
