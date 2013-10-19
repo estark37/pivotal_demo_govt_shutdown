@@ -1,5 +1,3 @@
-Comments = new Meteor.Collection("comments");
-
 if (Meteor.isClient) {
   Template.countdown.counter = function () {
     if (Session.get("shutdownCounter"))
@@ -22,9 +20,14 @@ if (Meteor.isClient) {
     return Comments.find();
   };
 
-  Template.comments.authorName = function () {
-    if (Meteor.user())
-      return Meteor.user().emails[0].address;
+  Template.comments.userId = function () {
+    return Meteor.userId();
+  };
+
+  Template.comment.commentAuthor = function () {
+    var userId = this.author;
+    if (userId && Meteor.users.findOne(userId))
+      return Meteor.users.findOne(userId).emails[0].address;
   };
 
   Meteor.setInterval(function () {
