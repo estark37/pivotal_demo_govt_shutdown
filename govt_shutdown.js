@@ -13,7 +13,6 @@ if (Meteor.isClient) {
         author: $("#author").val(),
         comment: $("#comment").val()
       });
-      $("#author").val("");
       $("#comment").val("");
       return false;
     }
@@ -21,6 +20,11 @@ if (Meteor.isClient) {
 
   Template.comments.comments = function () {
     return Comments.find();
+  };
+
+  Template.comments.authorName = function () {
+    if (Meteor.user())
+      return Meteor.user().emails[0].address;
   };
 
   Meteor.setInterval(function () {

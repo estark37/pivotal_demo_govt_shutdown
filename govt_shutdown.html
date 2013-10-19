@@ -8,6 +8,7 @@
 </body>
 
 <template name="countdown">
+  {{loginButtons}}
   <div class="container" style="margin-top:150px;">
       <h1>{{ counter }}</h1>
       <h3>seconds until the next government shutdown.</h3>
@@ -19,12 +20,16 @@
 
   <div class="container">
     <h4>Do you want to share a feeling?</h4>
+    {{#if currentUser}}
     <form id="commentForm">
-      Your name: <input type="text" name="author" id="author" /><br />
+      <input type="hidden" name="author" id="author" value="{{authorName}}" />
       What do you think of the shutdown?<br />
       <textarea name="comment" id="comment"></textarea><br />
       <input type="submit" value="Share" />
     </form>
+    {{else}}
+    Log in above.
+    {{/if}}
   </div>
 
   <div class="container">
