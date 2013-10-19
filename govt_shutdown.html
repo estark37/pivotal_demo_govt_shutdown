@@ -1,0 +1,42 @@
+<head>
+  <title>Is the government shutdown yet?</title>
+</head>
+
+<body>
+  {{> countdown}}
+  {{> comments}}
+</body>
+
+<template name="countdown">
+  <div class="container" style="margin-top:150px;">
+      <h1>{{ counter }}</h1>
+      <h3>seconds until the next government shutdown.</h3>
+      <hr />
+  </div>
+</template>
+
+<template name="comments">
+
+  <div class="container">
+    <h4>Do you want to share a feeling?</h4>
+    <form id="commentForm">
+      Your name: <input type="text" name="author" id="author" /><br />
+      What do you think of the shutdown?<br />
+      <textarea name="comment" id="comment"></textarea><br />
+      <input type="submit" value="Share" />
+    </form>
+  </div>
+
+  <div class="container">
+    {{#each comments}}
+    {{> comment}}
+    {{/each}}
+  </div>
+
+</template>
+
+<template name="comment">
+  <p>{{comment}}</p>
+  <small><i>by {{author}}</i></small>
+  <hr />
+</template>
