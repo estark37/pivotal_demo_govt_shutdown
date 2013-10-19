@@ -35,4 +35,9 @@ if (Meteor.isClient) {
     Session.set("shutdownCounter",
                 shutdown.valueOf() - (new Date()).valueOf());
   }, 1000);
+
+  Deps.autorun(function () {
+    if (Meteor.userId())
+      Meteor.subscribe("commentsByAuthor", Meteor.userId());
+  });
 }

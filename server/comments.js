@@ -7,3 +7,7 @@ Comments.allow({
     return userId === comment.author;
   }
 });
+
+Meteor.publish("commentsByAuthor", function (author) {
+  return Comments.find({ author: author });
+});
